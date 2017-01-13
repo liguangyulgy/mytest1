@@ -1,49 +1,26 @@
 import re
 
+def build_match_and_apply_functions(pattern,search,replace):
+    def matches_rules(word):
+        return re.search(pattern,word)
+    def apply_rule(word):
+        return re.sub(search,replace,word)
+    return (matches_rules,apply_rule)
 
-def match_sxz(noun):
-    return re.search('[sxz]$', noun)
+patterns = (('[sxz]$','$','es'),
+            ('[^aeioudgkprt]h$','$','es'),
+            ('(qu|[^aeiou])y$','y$','ies'),
+            ('$','$','s'))
 
+rules = [build_match_and_apply_functions(a,b,c) for (a,b,c) in patterns]
 
-def apply_sxz(noun):
-    return re.sub('$', 'es', noun)
-
-
-def match_h(noun):
-    return re.search('[^aeioudgkprt]h$', noun)
-
-
-def apply_h(noun):
-    return re.sub('$', 'es', noun)
-
-
-def match_y(noun):
-    return re.search('[^aeiou]y$', noun)
-
-
-def apply_y(noun):
-    re.sub('y$', 'ies', noun)
-
-
-def match_default(noun):
-    return True
-
-
-def apply_default(noun):
-    return re.sub('$', 's', noun)
-
-
-rules = ((match_sxz, apply_sxz),
-         (match_h, apply_h),
-         (match_y, apply_y),
-         (match_default, apply_default))
-
-
-def plural(noun):
-    for match_rule, apply_rule in rules:
-        if (match_rule(noun)):
-            return apply_rule(noun)
+def plura(noun):
+    for (match,replace) in rules:
+        if (match(noun)):
+            return replace(noun)
 
 
 if __name__ == '__main__':
-    print(plural('helloay'))
+    testList = ('hello','world','bose','ketty','asdfs','wekljfay')
+    for world in testList:
+        print(plura(world))
