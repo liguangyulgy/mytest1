@@ -2,6 +2,7 @@ import re
 import os
 import urllib3
 
+
 baseUrl = "http://www.moko.cc/mtb/model/%d/space.html"
 imgPat = re.compile(r'http://img\S*?\.(?:jpg|jpeg|png)')
 namePat = re.compile(r'<div class="username".*?<a>(.*)</a>')
