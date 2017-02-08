@@ -12,7 +12,8 @@ def worker(sign, lock,qq):
     # lock.acquire()
     print(sign, os.getpid())
     print(__name__)
-    time.sleep(5)
+    time.sleep(1)
+    return 'Hello'
     # lock.release()
 
 
@@ -44,14 +45,16 @@ def test():
 def test2():
     pool = multiprocessing.Pool(5)
     for i in range(5):
-        pool.apply_async(func=worker,args=('process2',None,None))
+        pool.apply_async(func=worker,args=('process2',None,None),callback=callback)
     pool.close()
     pool.join()
 
+def callback(arg):
+    print('callback',arg)
 
 if __name__ == '__main__':
     print('hello world')
     # Main
     print('Main:', os.getpid())
-    test()
+  #  test()
     test2()
