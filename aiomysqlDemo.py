@@ -41,7 +41,7 @@ async def create_table(engine):
 
 async def go(loop):
 
-    engine = await create_engine(user='gyli', db='liguangyumysql',
+    engine = await create_engine(autocommit=True,user='gyli', db='liguangyumysql',
 
                                  host='liguangyumysql.cf8iw2auduon.ap-southeast-1.rds.amazonaws.com', password='gyligyli', loop=loop)
 
